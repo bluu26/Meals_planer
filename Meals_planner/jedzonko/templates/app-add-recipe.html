@@ -1,0 +1,60 @@
+{% extends "__base__.html" %}
+
+{% block title %}Nowy przepis{% endblock %}
+
+{% block content %}
+<div class="dashboard-content border-dashed p-3 m-4 view-height">
+    <div class="mt-4 ml-4 mr-4">
+        <div class="row border-bottom border-3">
+            <div class="col">
+                <h3 class="color-header text-uppercase">Nowy przepis</h3>
+            </div>
+            <div class="col d-flex justify-content-end mb-2">
+                <!-- Usunięcie tego formularza, ponieważ mamy jeden formularz poniżej -->
+            </div>
+        </div>
+
+        <form method="post" action="/recipe/add/">
+            {% csrf_token %}
+            <table class="table borderless">
+                <tbody>
+                    <tr class="d-flex">
+                        <th scope="row" class="col-2"><label for="name">Nazwa Przepisu</label></th>
+                        <td class="col-7"><input class="w-100 p-1" type="text" name="name" id="name" required></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <th scope="row" class="col-2"><label for="description">Opis przepisu</label></th>
+                        <td class="col-7"><textarea class="w-100 p-1" name="description" id="description" rows="5" required></textarea></td>
+                    </tr>
+                    <tr class="d-flex">
+                        <th scope="row" class="col-2"><label for="preparation_time">Przygotowanie (minuty)</label></th>
+                        <td class="col-3"><input class="w-100 p-1" type="number" name="preparation_time" id="preparation_time" min="1" required></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row d-flex">
+                <div class="col-5 border-bottom border-3"><h3 class="text-uppercase">Składniki</h3></div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-10 p-4">
+                    <textarea class="w-100 p-1" name="preparation_details" id="preparation_details" rows="10" required></textarea>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-5 border-bottom border-3"><h3 class="text-uppercase">Sposób przygotowania</h3></div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-10 p-4">
+                    <textarea class="w-100 p-1" name="preparation_method" id="preparation_method" rows="10" required></textarea>
+                </div>
+            </div>
+            <div class="row d-flex">
+                <div class="col-12 text-center mt-4">
+                    <button type="submit" class="btn btn-color rounded-0 pt-0 pb-0 pr-4 pl-4">Zapisz</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

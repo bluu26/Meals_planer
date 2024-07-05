@@ -1,0 +1,64 @@
+{% extends "__base__.html" %}
+{% block title %}Lista Planów Żywieniowych{% endblock %}
+{% block content %}
+    <div class="dashboard-content border-dashed p-3 m-4 view-height">
+        <div class="row border-bottom border-3 p-1 m-1">
+            <div class="col no-padding">
+                <h3 class="color-header text-uppercase">LISTA PLANÓW</h3>
+            </div>
+            <div class="col d-flex justify-content-end mb-2 noPadding">
+                <a href="{% url 'DetailsPlanView' %}" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Dodaj
+                    przepis do planu</a>
+            </div>
+            <div class="col d-flex justify-content-end mb-2 no-padding">
+                <a href="/plan/add/" class="btn btn-success rounded-0 pt-0 pb-0 pr-4 pl-4">Dodaj plan</a>
+            </div>
+        </div>
+
+        <div class="schedules-content">
+            <ul class="list-group">
+                {% for plan in plans %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-1">{{ plan.title }}</h5>
+                            <p class="mb-1">{{ plan.description }}</p>
+                        </div>
+                        <a href="{% url 'plan-id' id=plan.id %}" class="btn btn-primary">Szczegóły</a>
+                        <a href="{% url 'plan_modify' pk=plan.id %}" class="btn btn-warning rounded-0 text-light m-1">Edytuj </a>
+                    </li>
+                {% endfor %}
+            </ul>
+            {% if num_pages > 1 %}
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center">
+                        {% if page > 1 %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=1" aria-label="Pierwsza">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page|add:"-1" }}">Poprzednia</a>
+                            </li>
+                        {% endif %}
+                        {% for num in page_numbers %}
+                            <li class="page-item {% if num == page %}active{% endif %}">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endfor %}
+                        {% if page < num_pages %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page|add:"1" }}">Następna</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num_pages }}" aria-label="Ostatnia">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
